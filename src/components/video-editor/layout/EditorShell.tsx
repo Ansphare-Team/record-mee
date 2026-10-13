@@ -42,6 +42,7 @@ type Props = {
 	setExperimentalNvidiaCudaExport: (enabled: boolean) => void;
 	effectiveShowCursor: boolean;
 	previewAspectRatioValue: number;
+	onAuthRequired?: () => void;
 };
 
 export function EditorShell(props: Props) {
@@ -66,6 +67,7 @@ export function EditorShell(props: Props) {
 		setExperimentalNvidiaCudaExport,
 		effectiveShowCursor,
 		previewAspectRatioValue,
+		onAuthRequired,
 	} = props;
 	const {
 		snapshot,
@@ -177,6 +179,7 @@ export function EditorShell(props: Props) {
 				handleStartExportFromDropdown={dialogActions.handleStartExportFromDropdown}
 				revealExportedFile={dialogActions.revealExportedFile}
 				exportMessage={exportMessage}
+				onAuthRequired={onAuthRequired}
 			/>
 			<EditorAnnouncementBanner />
 			<div className="relative flex min-h-0 flex-1 flex-col gap-3 p-4">
@@ -186,6 +189,7 @@ export function EditorShell(props: Props) {
 						activeSection={ui.activeEffectSection}
 						setActiveSection={ui.setActiveEffectSection}
 						settingsPanelProps={settingsPanelProps}
+						onAuthRequired={onAuthRequired}
 					/>
 					<EditorPreviewPanel
 						t={t}

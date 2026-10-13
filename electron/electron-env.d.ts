@@ -858,6 +858,12 @@ interface Window {
 			message?: string;
 			error?: string;
 		}>;
+		scanLocalRecordings: () => Promise<{
+			success: boolean;
+			count?: number;
+			files?: string[];
+			error?: string;
+		}>;
 		getShortcuts: () => Promise<Record<string, unknown> | null>;
 		saveShortcuts: (shortcuts: unknown) => Promise<{ success: boolean; error?: string }>;
 		getAppSetting: (key: string) => unknown;
@@ -904,6 +910,8 @@ interface Window {
 		cancelCountdown: () => Promise<{ success: boolean }>;
 		getActiveCountdown: () => Promise<{ success: boolean; seconds: number | null }>;
 		onCountdownTick: (callback: (seconds: number) => void) => () => void;
+		onAuthCallback: (callback: (event: Electron.IpcRendererEvent, url: string) => void) => () => void;
+		removeAuthCallbackListener: (callback: (event: Electron.IpcRendererEvent, url: string) => void) => void;
 	};
 }
 

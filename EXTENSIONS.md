@@ -307,4 +307,4 @@ Use `parentSection` to nest your panel inside an existing area such as `cursor` 
 
 ## Examples
 
-- `extension-examples/webadderall.more-wallpapers` shows a user-installable wallpaper bundle that registers 180 packaged wallpapers through `registerWallpaper()`.
+- `extension-examples/ansphareteam.more-wallpapers` shows a user-installable wallpaper bundle that registers 180 packaged wallpapers through `registerWallpaper()`.

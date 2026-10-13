@@ -5,6 +5,8 @@ import { resolveExportStartSettings } from "../exportStartSettings";
 import type { VideoPlaybackRef } from "../VideoPlayback";
 import type { useExportSession } from "./useExportSession";
 import type { useExportSettings } from "./useExportSettings";
+import { getSession, PRICING_PAGE_URL } from "@/lib/recordmeeAuth";
+import { subscriptionLimits } from "@/lib/subscriptionLimits";
 
 type ExportSession = ReturnType<typeof useExportSession>;
 type ExportSettingsState = ReturnType<typeof useExportSettings>;
@@ -17,6 +19,7 @@ type UseExportDialogActionsInput = {
 	session: ExportSession;
 	handleExport: (settings: ExportSettings) => void;
 	showExportSuccessToast: (filePath: string) => void;
+	onAuthRequired?: () => void;
 };
 
 export function useExportDialogActions({
@@ -27,6 +30,7 @@ export function useExportDialogActions({
 	session,
 	handleExport,
 	showExportSuccessToast,
+	onAuthRequired,
 }: UseExportDialogActionsInput) {
 	const handleOpenExportDropdown = useCallback(() => {
 		if (!videoPath) {
@@ -46,7 +50,7 @@ export function useExportDialogActions({
 		session.setExportError(null);
 	}, [videoPath, session]);
 
-	const handleStartExportFromDropdown = useCallback(() => {
+	const handleStartExportFromDropdown = useCallback(async () => {
 		const video = videoPlaybackRef.current?.video;
 		if (!videoPath) {
 			toast.error("No video loaded");
@@ -58,6 +62,25 @@ export function useExportDialogActions({
 		}
 		if (video.videoWidth <= 0 || video.videoHeight <= 0) {
 			toast.error("Video metadata is still loading");
+			return;
+		}
+
+		// Check authentication
+		const authSession = await getSession();
+		if (!authSession) {
+			onAuthRequired?.();
+			return;
+		}
+
+		// Check subscription status
+		const userId = authSession.user.id;
+		const canExport = await subscriptionLimits.canUserExport(userId);
+
+		if (!canExport.allowed) {
+			// Redirect to pricing page with token
+			const accessToken = authSession.access_token;
+			const pricingUrl = `${PRICING_PAGE_URL}?token=${accessToken}`;
+			window.open(pricingUrl, "_blank");
 			return;
 		}
 
@@ -80,7 +103,7 @@ export function useExportDialogActions({
 		session.setExportedFilePath(undefined);
 		session.setShowExportDropdown(true);
 		handleExport(resolvedSettings);
-	}, [videoPath, videoPlaybackRef, hasCaptionsForSidecar, settings, session, handleExport]);
+	}, [videoPath, videoPlaybackRef, hasCaptionsForSidecar, settings, session, handleExport, onAuthRequired]);
 
 	const handleCancelExport = useCallback(() => {
 		if (!session.isExporting) return;

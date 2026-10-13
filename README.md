@@ -172,7 +172,7 @@ Browse and install community extensions from the [Recordly Marketplace](https://
 
 Prebuilt releases are available at:
 
-https://github.com/webadderallorg/Recordly/releases
+https://github.com/Ansphare-Team/recordmee-desktop/releases
 
 ---
 
@@ -205,7 +205,7 @@ sudo apt install build-essential cmake libx11-dev libxtst-dev libxrandr-dev libx
 ### Steps
 
 ```bash
-git clone https://github.com/webadderallorg/Recordly.git recordly
+git clone https://github.com/Ansphare-Team/recordmee-desktop.git recordmee
 cd recordly
 npm install
 npm run dev
@@ -362,7 +362,7 @@ See `CONTRIBUTING.md` for guidelines.
 
 Bug reports and feature requests:
 
-https://github.com/webadderallorg/Recordly/issues
+https://github.com/Ansphare-Team/recordmee-desktop/issues
 
 Pull requests are welcome.
 
@@ -370,7 +370,7 @@ Pull requests are welcome.
 
 # Hall of Supporters
 
-[![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/webadderall)
+[![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/AnsphareTeam)
 
 - Tom Egan @tomegan on X
 - Robin Ebers @robinebers on X
@@ -404,6 +404,6 @@ Recordly originally started as a fork of [OpenScreen](https://github.com/siddhar
 Many features of OpenScreen such as its zoom animations are directly ported from early versions of Recordly.
 
 Created by  
-[@webadderall](https://x.com/webadderall)
+[@AnsphareTeam](https://x.com/AnsphareTeam)
 
 ---

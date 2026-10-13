@@ -1,5 +1,5 @@
 /* biome-ignore-all lint/correctness/useExhaustiveDependencies: setters returned by the editor's domain-state hooks are stable React dispatchers. */
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useI18n } from "@/contexts/I18nContext";
 import { useShortcuts } from "@/contexts/ShortcutsContext";
 import { getAspectRatioValue } from "@/utils/aspectRatioUtils";
@@ -20,9 +20,32 @@ import { useEditorUiState } from "./state/useEditorUiState";
 import { useProjectState } from "./state/useProjectState";
 import { useTimelineState } from "./state/useTimelineState";
 import { useNvidiaCudaExportOptIn } from "./useNvidiaCudaExportOptIn";
+import { AuthPopup } from "../auth/AuthPopup";
 
 export default function VideoEditor() {
 	const { t } = useI18n();
+	const [showAuthPopup, setShowAuthPopup] = useState(false);
+	const [, setAuthStateRefresh] = useState(0);
+
+	// Refresh auth state when popup closes
+	useEffect(() => {
+		if (!showAuthPopup) {
+			setAuthStateRefresh((prev) => prev + 1);
+		}
+	}, [showAuthPopup]);
+
+	// Listen for auth-required event from sidebar
+	const handleAuthRequired = () => {
+		setShowAuthPopup(true);
+	};
+
+	useEffect(() => {
+		window.addEventListener('auth-required', handleAuthRequired);
+		return () => {
+			window.removeEventListener('auth-required', handleAuthRequired);
+		};
+	}, [handleAuthRequired]);
+
 	const smokeExportConfig = useMemo(
 		() => getSmokeExportConfig(typeof window === "undefined" ? "" : window.location.search),
 		[],
@@ -323,6 +346,7 @@ export default function VideoEditor() {
 		experimentalNvidiaCudaExport,
 		nvidiaCudaExportAvailable,
 		remountPreview,
+		onAuthRequired: () => setShowAuthPopup(true),
 	});
 	const previewAspectRatioValue = getAspectRatioValue(
 		aspectRatio,
@@ -362,27 +386,34 @@ export default function VideoEditor() {
 		handleClearWebcam,
 	});
 	return (
-		<EditorShell
-			t={t}
-			project={project}
-			appearance={appearance}
-			timeline={timeline}
-			ui={ui}
-			presets={presets}
-			projectController={projectController}
-			editing={editing}
-			exportController={exportController}
-			exportSettings={exportSettings}
-			exportSession={exportSession}
-			exportDimensions={exportDimensions}
-			settingsPanelProps={settingsPanelProps}
-			headerLeftControlsPaddingClass={headerLeftControlsPaddingClass}
-			hasCaptionsForSidecar={hasCaptionsForSidecar}
-			nvidiaCudaExportAvailable={nvidiaCudaExportAvailable}
-			experimentalNvidiaCudaExport={experimentalNvidiaCudaExport}
-			setExperimentalNvidiaCudaExport={setExperimentalNvidiaCudaExport}
-			effectiveShowCursor={effectiveShowCursor}
-			previewAspectRatioValue={previewAspectRatioValue}
-		/>
+		<>
+			<EditorShell
+				t={t}
+				project={project}
+				appearance={appearance}
+				timeline={timeline}
+				ui={ui}
+				presets={presets}
+				projectController={projectController}
+				editing={editing}
+				exportController={exportController}
+				exportSettings={exportSettings}
+				exportSession={exportSession}
+				exportDimensions={exportDimensions}
+				settingsPanelProps={settingsPanelProps}
+				headerLeftControlsPaddingClass={headerLeftControlsPaddingClass}
+				hasCaptionsForSidecar={hasCaptionsForSidecar}
+				nvidiaCudaExportAvailable={nvidiaCudaExportAvailable}
+				experimentalNvidiaCudaExport={experimentalNvidiaCudaExport}
+				setExperimentalNvidiaCudaExport={setExperimentalNvidiaCudaExport}
+				effectiveShowCursor={effectiveShowCursor}
+				previewAspectRatioValue={previewAspectRatioValue}
+				onAuthRequired={handleAuthRequired}
+			/>
+			<AuthPopup
+				open={showAuthPopup}
+				onClose={() => setShowAuthPopup(false)}
+			/>
+		</>
 	);
 }

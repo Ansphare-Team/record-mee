@@ -8,6 +8,8 @@ import {
 	selectRecordingMimeType,
 	selectWebcamRecordingMimeType,
 } from "./recordingMimeType";
+import { subscriptionLimits } from "@/lib/subscriptionLimits";
+import { getCurrentUser } from "@/lib/recordmeeAuth";
 
 const TARGET_FRAME_RATE = 60;
 const TARGET_WIDTH = 3840;
@@ -557,8 +559,8 @@ export function useScreenRecorder(): UseScreenRecorderReturn {
 			await window.electronAPI.openScreenRecordingPreferences();
 			alert(
 				options.startup
-					? "Recordly needs Screen Recording permission before you start. System Settings has been opened. After enabling it, quit and reopen Recordly."
-					: "Screen Recording permission is still missing. System Settings has been opened again. Enable it, then quit and reopen Recordly before recording.",
+					? "RecordMee needs Screen Recording permission before you start. System Settings has been opened. After enabling it, quit and reopen RecordMee."
+					: "Screen Recording permission is still missing. System Settings has been opened again. Enable it, then quit and reopen RecordMee before recording.",
 			);
 			return false;
 		}
@@ -580,8 +582,8 @@ export function useScreenRecorder(): UseScreenRecorderReturn {
 		await window.electronAPI.openAccessibilityPreferences();
 		alert(
 			options.startup
-				? "Recordly also needs Accessibility permission for cursor tracking. System Settings has been opened. After enabling it, quit and reopen Recordly."
-				: "Accessibility permission is still missing. System Settings has been opened again. Enable it, then quit and reopen Recordly before recording.",
+				? "RecordMee also needs Accessibility permission for cursor tracking. System Settings has been opened. After enabling it, quit and reopen RecordMee."
+				: "Accessibility permission is still missing. System Settings has been opened again. Enable it, then quit and reopen RecordMee before recording.",
 		);
 
 		return false;
@@ -766,13 +768,26 @@ export function useScreenRecorder(): UseScreenRecorderReturn {
 				}
 			}
 
+			// Track recording usage in database for all recording types
+			try {
+				const currentUser = await getCurrentUser();
+				if (currentUser?.id) {
+					const durationMs = getRecordingDurationMs(Date.now());
+					const durationSeconds = Math.floor(durationMs / 1000);
+					await subscriptionLimits.trackRecordingUsage(currentUser.id, durationSeconds);
+					console.log(`[Usage] Tracked recording: ${durationSeconds}s for user ${currentUser.id}`);
+				}
+			} catch (usageError) {
+				console.error("Failed to track recording usage:", usageError);
+			}
+
 			setFinalizing(false);
 			await window.electronAPI.switchToEditor();
 			console.log(
 				`[PERF:RENDERER] Finalize Session & Switch to Editor: COMPLETED in ${(performance.now() - start).toFixed(2)}ms`,
 			);
 		},
-		[],
+		[getRecordingDurationMs],
 	);
 
 	const closeMicFallbackPauseInterval = useCallback((now = performance.now()) => {
@@ -1356,6 +1371,18 @@ export function useScreenRecorder(): UseScreenRecorderReturn {
 				}
 
 				const finalPath = result.path;
+
+				// Track recording usage in database
+				try {
+					const currentUser = await getCurrentUser();
+					if (currentUser?.id) {
+						const durationSeconds = Math.floor(expectedDurationMs / 1000);
+						await subscriptionLimits.trackRecordingUsage(currentUser.id, durationSeconds);
+						console.log(`[Usage] Tracked recording: ${durationSeconds}s for user ${currentUser.id}`);
+					}
+				} catch (usageError) {
+					console.error("Failed to track recording usage:", usageError);
+				}
 
 				// 1. Finalize the session and switch to editor immediately (Optimistic UI)
 				// We pass null for webcamPath initially to avoid blocking on webcam disk writes/muxing.

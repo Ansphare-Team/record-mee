@@ -2,8 +2,10 @@ import {
 	FolderOpen,
 	ArrowClockwise as Redo2,
 	ArrowCounterClockwise as Undo2,
+	CurrencyDollar,
 } from "@phosphor-icons/react";
 import type { CSSProperties, FormEvent, RefObject } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import type { useI18n } from "@/contexts/I18nContext";
 import type { useExportDimensions } from "../export/useExportDimensions";
@@ -15,6 +17,8 @@ import type { useProjectState } from "../state/useProjectState";
 import { APP_HEADER_ICON_BUTTON_CLASS, DiscordLinkButton, FeedbackDialog } from "../TutorialHelp";
 import { EditorExportMenu } from "./EditorExportMenu";
 import { EditorPresetMenu } from "./EditorPresetMenu";
+import { getSession, PRICING_PAGE_URL, getCurrentUser, CLIENT_PAGE_URL } from "@/lib/recordmeeAuth";
+import { subscriptionLimits } from "@/lib/subscriptionLimits";
 
 type Props = {
 	t: ReturnType<typeof useI18n>["t"];
@@ -47,6 +51,7 @@ type Props = {
 	handleStartExportFromDropdown: () => void;
 	revealExportedFile: () => void;
 	exportMessage: string | null;
+	onAuthRequired?: () => void;
 };
 
 export function EditorHeader(props: Props) {
@@ -81,7 +86,45 @@ export function EditorHeader(props: Props) {
 		handleStartExportFromDropdown,
 		revealExportedFile,
 		exportMessage,
+		onAuthRequired,
 	} = props;
+
+	const [sellLoading, setSellLoading] = useState(false);
+
+	async function handleSellRecordings() {
+		const session = await getSession();
+		if (!session) {
+			onAuthRequired?.();
+			return;
+		}
+
+		setSellLoading(true);
+
+		// Check if user has an active subscription
+		const currentUser = await getCurrentUser();
+		if (currentUser) {
+			try {
+				const subscription = await subscriptionLimits.getUserSubscription(currentUser.id);
+				if (subscription && subscription.status === "active") {
+					// User has an active subscription (starter, pro, or enterprise) - allow to sell
+					const accessToken = session.access_token;
+					const clientUrl = `${CLIENT_PAGE_URL}?token=${accessToken}`;
+					window.open(clientUrl, "_blank");
+					setSellLoading(false);
+					return;
+				}
+			} catch (error) {
+				// If subscription check fails, default to pricing page
+				console.error("Subscription check failed:", error);
+			}
+		}
+
+		// User doesn't have an active subscription, redirect to pricing page
+		const accessToken = session.access_token;
+		const pricingUrl = `${PRICING_PAGE_URL}?token=${accessToken}`;
+		window.open(pricingUrl, "_blank");
+		setSellLoading(false);
+	}
 	const {
 		isEditingProjectName,
 		setIsEditingProjectName,
@@ -170,7 +213,7 @@ export function EditorHeader(props: Props) {
 							aria-label={t("editor.project.renameInput", "Project name")}
 						/>
 						<span className="shrink-0 text-xs font-medium tracking-tight text-muted-foreground/70">
-							.recordly
+							.recordmee
 						</span>
 					</form>
 				) : (
@@ -188,7 +231,7 @@ export function EditorHeader(props: Props) {
 							{projectDisplayName}
 						</span>
 						<span className="shrink-0 text-xs font-medium tracking-tight text-muted-foreground/70">
-							.recordly
+							.recordmee
 						</span>
 					</button>
 				)}
@@ -198,6 +241,19 @@ export function EditorHeader(props: Props) {
 				className="flex items-center justify-self-end"
 				style={{ WebkitAppRegion: "no-drag" } as CSSProperties}
 			>
+				<Button
+					type="button"
+					onClick={handleSellRecordings}
+					disabled={sellLoading}
+					className="mr-2 inline-flex h-8 px-3 items-center justify-center gap-2 rounded-[5px] bg-[#10B981] text-white text-xs font-semibold hover:bg-[#10B981]/92 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+				>
+					{sellLoading ? (
+						<div className="inline-block animate-spin rounded-full h-3 w-3 border-b-2 border-white" />
+					) : (
+						<CurrencyDollar className="h-3.5 w-3.5" />
+					)}
+					<span>{sellLoading ? "Loading..." : "Sell Recordings"}</span>
+				</Button>
 				<EditorPresetMenu t={t} presets={presets} />
 				<div
 					aria-hidden="true"

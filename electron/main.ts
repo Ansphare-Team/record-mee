@@ -18,6 +18,7 @@ import {
 import { RECORDINGS_DIR } from "./appPaths";
 import { showCursor } from "./cursorHider";
 import { getGpuSwitches } from "./gpuSwitches";
+import { setupAuthCallback } from "./authCallback";
 import {
 	cleanupAllExportStreams,
 	cleanupNativeVideoExportSessions,
@@ -208,7 +209,7 @@ function closeEditorWindowToHud(window: BrowserWindow | null) {
 
 	// The HUD renderer normally remains hidden while the editor is open so
 	// recording finalization can continue. Restore that HUD before destroying
-	// the editor, keeping Recordly in its ready-to-record state on the taskbar.
+	// the editor, keeping RecordMee in its ready-to-record state on the taskbar.
 	window.hide();
 	if (mainWindow === window) {
 		mainWindow = null;
@@ -252,7 +253,7 @@ let defaultTrayIcon: ReturnType<typeof getTrayIcon> | null = null;
 let recordingTrayIcon: ReturnType<typeof getTrayIcon> | null = null;
 
 function getPlatformAppIconFilename(size: 32 | 128 | 512) {
-	const baseName = process.platform === "darwin" ? "recordlymac" : "recordly";
+	const baseName = process.platform === "darwin" ? "recordmeemac" : "recordmee";
 	return `app-icons/${baseName}-${size}.png`;
 }
 
@@ -560,7 +561,7 @@ function createTray() {
 }
 
 function shouldUseTray() {
-	// macOS and Windows expose Recordly through their Dock/taskbar. Keep the
+	// macOS and Windows expose RecordMee through their Dock/taskbar. Keep the
 	// tray entry only on Linux, where it remains the primary app entry point.
 	return process.platform === "linux";
 }
@@ -705,7 +706,7 @@ ipcMain.handle("check-for-app-updates", async () => {
 function updateTrayMenu(recording: boolean = false) {
 	if (!tray) return;
 	const trayIcon = recording ? getRecordingTrayIcon() : getDefaultTrayIcon();
-	const trayToolTip = recording ? `Recording: ${selectedSourceName}` : "Recordly";
+	const trayToolTip = recording ? `Recording: ${selectedSourceName}` : "RecordMee";
 	const menuTemplate = recording
 		? [
 				{
@@ -890,8 +891,11 @@ app.on("second-instance", () => {
 // Register all IPC handlers when app is ready
 app.whenReady().then(async () => {
 	if (process.platform === "win32") {
-		app.setAppUserModelId("dev.recordly.app");
+		app.setAppUserModelId("dev.recordmee.app");
 	}
+
+	// Setup custom protocol for auth callback
+	setupAuthCallback();
 
 	session.defaultSession.setPermissionCheckHandler(
 		(webContents, permission, requestingOrigin, details) => {
@@ -932,7 +936,7 @@ app.whenReady().then(async () => {
 		},
 	);
 
-	// Recordly does not use WebHID, Web Serial, or WebUSB. Do not grant devices by default.
+	// RecordMee does not use WebHID, Web Serial, or WebUSB. Do not grant devices by default.
 	session.defaultSession.setDevicePermissionHandler(() => false);
 
 	// macOS prompts for camera and microphone access at the point of use. Asking

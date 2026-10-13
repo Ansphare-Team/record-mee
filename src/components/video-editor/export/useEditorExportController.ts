@@ -42,6 +42,7 @@ type Input = {
 	experimentalNvidiaCudaExport: boolean;
 	nvidiaCudaExportAvailable: boolean;
 	remountPreview: () => void;
+	onAuthRequired?: () => void;
 };
 
 export function useEditorExportController(input: Input) {
@@ -73,6 +74,7 @@ export function useEditorExportController(input: Input) {
 		session: input.session,
 		handleExport: runner.handleExport,
 		showExportSuccessToast: runner.showExportSuccessToast,
+		onAuthRequired: input.onAuthRequired,
 	});
 	useSmokeExportAutomation({
 		config: input.smokeConfig,

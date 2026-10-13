@@ -1,7 +1,7 @@
 {
 	"app": {
-		"name": "Recordly",
-		"editorTitle": "Recordly Editor",
+		"name": "RecordMee",
+		"editorTitle": "RecordMee Editor",
 		"subtitle": "Bildschirmaufzeichnung und -bearbeitung",
 		"language": "Sprache",
 		"manageRecordings": "Aufzeichnungsordner öffnen"

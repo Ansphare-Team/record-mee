@@ -223,7 +223,7 @@ function normalizeZoomTransitionEasing(
 	value: unknown,
 	fallback: ZoomTransitionEasing,
 ): ZoomTransitionEasing {
-	return value === "recordly" ||
+	return value === "recordmee" ||
 		value === "glide" ||
 		value === "smooth" ||
 		value === "snappy" ||

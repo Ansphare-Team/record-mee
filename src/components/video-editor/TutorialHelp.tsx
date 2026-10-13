@@ -24,10 +24,9 @@ import { formatBinding, SHORTCUT_ACTIONS, SHORTCUT_LABELS } from "@/lib/shortcut
 import { formatShortcut } from "@/utils/platformUtils";
 import { toast } from "sonner";
 
-export const RECORDLY_ISSUES_URL = "https://github.com/webadderallorg/Recordly/issues";
-const RECORDLY_DISCORD_URL = "https://discord.gg/sdv2FBVNgE";
-const RECORDLY_X_URL = "https://x.com/webadderall";
-const CONTACT_EMAIL = "youngchen3442@gmail.com";
+export const RECORDLY_ISSUES_URL = "https://github.com/Ansphare-Team/recordmee-desktop/issues";
+const CONTACT_EMAIL = "help@recordmee.com";
+const RECORDLY_X_URL = "https://x.com/AnsphareTeam";
 export const APP_HEADER_ACTION_BUTTON_CLASS =
 	"h-7 px-2 text-xs text-muted-foreground hover:bg-foreground/10 hover:text-foreground transition-all gap-1.5";
 export const APP_HEADER_ICON_BUTTON_CLASS =
@@ -65,15 +64,9 @@ export function DiscordLinkButton() {
 			type="button"
 			variant="ghost"
 			size="sm"
-			onClick={() =>
-				void openExternalLink(
-					RECORDLY_DISCORD_URL,
-					t("feedback.openFailed", "Failed to open link."),
-				)
-			}
 			className={APP_HEADER_ICON_BUTTON_CLASS}
-			title={t("common.app.discord", "Join Discord")}
-			aria-label={t("common.app.discord", "Join Discord")}
+			title={t("common.app.discord", "Discord")}
+			aria-label={t("common.app.discord", "Discord")}
 		>
 			<DiscordIcon className="h-3.5 w-3.5" />
 		</Button>
@@ -140,7 +133,7 @@ export function FeedbackDialog() {
 									{t("feedback.xLabel", "X")}
 								</p>
 								<p className="mt-1 text-sm font-medium text-foreground">
-									@webadderall
+									@AnsphareTeam
 								</p>
 							</div>
 							<Button

@@ -1,6 +1,6 @@
 export function getAudioResourceVersionKey(resource: string, version = 0): string {
 	const safeVersion = Number.isFinite(version) ? Math.max(0, Math.trunc(version)) : 0;
-	return `${resource}::recordly-audio-v${safeVersion}`;
+	return `${resource}::recordmee-audio-v${safeVersion}`;
 }
 
 function parseLoopbackMediaServerUrl(resourceUrl: string): URL | null {
@@ -22,7 +22,7 @@ export function getAudioResourceCacheScope(resourceUrl: string): string {
 		return resourceUrl;
 	}
 
-	url.searchParams.delete("recordlyAudioVersion");
+	url.searchParams.delete("recordmeeAudioVersion");
 	return url.href;
 }
 
@@ -37,7 +37,7 @@ export function getVersionedAudioResourceUrl(resourceUrl: string, version = 0): 
 		return resourceUrl;
 	}
 
-	url.searchParams.set("recordlyAudioVersion", String(safeVersion));
+	url.searchParams.set("recordmeeAudioVersion", String(safeVersion));
 	return url.href;
 }
 

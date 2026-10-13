@@ -119,9 +119,14 @@ export type EditorEffectSection =
 	| "extensions"
 	| "clip"
 	| "audio"
+	| "background"
+	| "mouse"
+	| "transitions"
+	| "effects"
+	| "camera"
 	| `ext:${string}`;
 
-export type ZoomTransitionEasing = "recordly" | "glide" | "smooth" | "snappy" | "linear";
+export type ZoomTransitionEasing = "recordmee" | "glide" | "smooth" | "snappy" | "linear";
 
 export type WebcamCorner = "top-left" | "top-right" | "bottom-left" | "bottom-right";
 export type WebcamPositionPreset =
@@ -186,8 +191,8 @@ export const DEFAULT_ZOOM_IN_OVERLAP_MS = 500;
 export const DEFAULT_ZOOM_OUT_DURATION_MS = 1015.05;
 export const DEFAULT_CONNECTED_ZOOM_GAP_MS = 1500;
 export const DEFAULT_CONNECTED_ZOOM_DURATION_MS = 1000;
-export const DEFAULT_ZOOM_IN_EASING: ZoomTransitionEasing = "recordly";
-export const DEFAULT_ZOOM_OUT_EASING: ZoomTransitionEasing = "recordly";
+export const DEFAULT_ZOOM_IN_EASING: ZoomTransitionEasing = "recordmee";
+export const DEFAULT_ZOOM_OUT_EASING: ZoomTransitionEasing = "recordmee";
 export const DEFAULT_CONNECTED_ZOOM_EASING: ZoomTransitionEasing = "glide";
 export const DEFAULT_WEBCAM_SIZE = 40;
 export const DEFAULT_WEBCAM_REACT_TO_ZOOM = true;

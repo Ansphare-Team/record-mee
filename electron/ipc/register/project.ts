@@ -357,10 +357,10 @@ export function registerProjectHandlers() {
 				const defaultName = `${safeName}.${PROJECT_FILE_EXTENSION}`;
 
 				const result = await dialog.showSaveDialog({
-					title: "Save Recordly Project",
+					title: "Save RecordMee Project",
 					defaultPath: path.join(projectsDir, defaultName),
 					filters: [
-						{ name: "Recordly Project", extensions: [PROJECT_FILE_EXTENSION] },
+						{ name: "RecordMee Project", extensions: [PROJECT_FILE_EXTENSION] },
 						{ name: "JSON", extensions: ["json"] },
 					],
 					properties: ["createDirectory", "showOverwriteConfirmation"],
@@ -510,11 +510,11 @@ export function registerProjectHandlers() {
 		try {
 			const projectsDir = await getProjectsDir();
 			const result = await dialog.showOpenDialog({
-				title: "Open Recordly Project",
+				title: "Open RecordMee Project",
 				defaultPath: projectsDir,
 				filters: [
 					{
-						name: "Recordly Project",
+						name: "RecordMee Project",
 						extensions: [PROJECT_FILE_EXTENSION, ...LEGACY_PROJECT_FILE_EXTENSIONS],
 					},
 					{ name: "JSON", extensions: ["json"] },
@@ -772,5 +772,36 @@ export function registerProjectHandlers() {
 			return { success: false as const };
 		}
 		return { success: true as const, url: buildMediaUrl(baseUrl, resolved) };
+	});
+
+	ipcMain.handle("scan-local-recordings", async () => {
+		try {
+			console.log("[IPC] scan-local-recordings: Starting scan...");
+			const recordingsDir = await getRecordingsDir();
+			console.log("[IPC] scan-local-recordings: Recordings dir:", recordingsDir);
+			
+			const entries = await fs.readdir(recordingsDir, { withFileTypes: true });
+			console.log("[IPC] scan-local-recordings: Total entries:", entries.length);
+
+			const videoFiles = entries
+				.filter((entry) => entry.isFile())
+				.filter((entry) => {
+					const name = entry.name.toLowerCase();
+					return name.endsWith(".mp4") || name.endsWith(".webm") || name.endsWith(".mov");
+				})
+				.map((entry) => path.join(recordingsDir, entry.name));
+
+			console.log("[IPC] scan-local-recordings: Found video files:", videoFiles.length);
+			console.log("[IPC] scan-local-recordings: Files:", videoFiles);
+
+			return {
+				success: true,
+				count: videoFiles.length,
+				files: videoFiles,
+			};
+		} catch (error) {
+			console.error("[IPC] scan-local-recordings: Error:", error);
+			return { success: false, error: String(error) };
+		}
 	});
 }

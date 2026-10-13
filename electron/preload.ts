@@ -931,6 +931,9 @@ contextBridge.exposeInMainWorld("electronAPI", {
 	chooseRecordingsDirectory: () => {
 		return ipcRenderer.invoke("choose-recordings-directory");
 	},
+	scanLocalRecordings: () => {
+		return ipcRenderer.invoke("scan-local-recordings");
+	},
 	getShortcuts: () => {
 		return ipcRenderer.invoke("get-shortcuts");
 	},
@@ -991,5 +994,13 @@ contextBridge.exposeInMainWorld("electronAPI", {
 		const listener = (_event: Electron.IpcRendererEvent, seconds: number) => callback(seconds);
 		ipcRenderer.on("countdown-tick", listener);
 		return () => ipcRenderer.removeListener("countdown-tick", listener);
+	},
+	onAuthCallback: (callback: (event: Electron.IpcRendererEvent, url: string) => void) => {
+		const listener = (event: Electron.IpcRendererEvent, url: string) => callback(event, url);
+		ipcRenderer.on("auth-callback", listener);
+		return () => ipcRenderer.removeListener("auth-callback", listener);
+	},
+	removeAuthCallbackListener: (callback: (event: Electron.IpcRendererEvent, url: string) => void) => {
+		ipcRenderer.removeListener("auth-callback", callback);
 	},
 });
