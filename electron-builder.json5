@@ -47,7 +47,7 @@
     {
       "provider": "github",
       "owner": "Ansphare-Team",
-      "repo": "recordmee-desktop",
+      "repo": "record-mee",
       "tagNamePrefix": "v",
       "publishAutoUpdate": true
     }
