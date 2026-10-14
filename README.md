@@ -10,17 +10,11 @@ Language: EN | [简中](README.zh-CN.md)
 </p>
 
 ### Create polished demo videos in minutes
-[RecordMee](https://www.recordly.dev) is your **open-source screen recorder** and editor for **walkthroughs, demos, product videos**, and more.
+[RecordMee](https://www.recordmeee.dev) is your **open-source screen recorder** and editor for **walkthroughs, demos, product videos**, and more.
 **Accepting PRs.**
 
 <img width="1280" height="720" alt="MP4 to GIF export (4)" src="https://github.com/user-attachments/assets/e6d68606-5fc0-4f70-99cd-7521982dc13b" />
 
-
----
-### Backed by the community
-<a href="https://coderabbit.link/recordly"><img width="400" alt="CodeRabbit Typemark" src="https://github.com/user-attachments/assets/3926ecfd-8652-4f2d-8da8-ac7641017cf5" /></a>
-
----
 
 ## What is RecordMee?
 
@@ -178,13 +172,13 @@ https://github.com/Ansphare-Team/record-mee/releases
 
 ## Arch Linux / Manjaro (yay)
 
-Install from the AUR ([recordly-bin](https://aur.archlinux.org/packages/recordly-bin)):
+Install from the AUR ([recordly-bin](https://aur.archlinux.org/packages/recordmee-bin)):
 
 ```bash
 yay -S recordly-bin
 ```
 
-PKGBUILD, desktop entry, release sync, and optional **local-from-source** packaging live in **[recordly-aur](https://github.com/firtoz/recordly-aur)** so this repository stays free of Arch release chores. For maintainer contact and how the package is updated, see that repo or the AUR package page.
+PKGBUILD, desktop entry, release sync, and optional **local-from-source** packaging live in **[recordmee-aur](https://github.com/firtoz/recordmee-aur)** so this repository stays free of Arch release chores. For maintainer contact and how the package is updated, see that repo or the AUR package page.
 
 ---
 
@@ -400,7 +394,7 @@ RecordMee is licensed under the **AGPL 3.0**.
 
 ## Acknowledgements
 
-RecordMee originally started as a fork of [OpenScreen](https://github.com/siddharthvaddem/openscreen). Over 80% of code has diverged since.
+RecordMee originally started as a fork of [OpenScreen](https://github.com/siddharthvaddem/openscreen).and (https://github.com/webadderallorg/Recordly) Over 80% of code has diverged since.
 Many features of OpenScreen such as its zoom animations are directly ported from early versions of RecordMee.
 
 Created by  
