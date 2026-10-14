@@ -4,7 +4,7 @@ const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
 export const AUTH_CALLBACK_URL = "recordmee://auth/callback";
-export const AUTH_WEBSITE_URL = "https://recordmee.com/account?desktop=true";
+export const AUTH_WEBSITE_URL = "https://recordmee.com/auth?desktop=true";
 export const PRICING_PAGE_URL = "https://recordmee.com/pricing";
 export const CLIENT_PAGE_URL = "https://recordmee.com/clients";
 
