@@ -1,7 +1,7 @@
 import { getSupabaseClient } from "./recordmeeAuth";
 
 export type PlanType = "starter" | "pro" | "enterprise";
-export type SubscriptionStatus = "active" | "cancelled" | "expired" | "past_due";
+export type SubscriptionStatus = "active" | "trial" | "cancelled" | "expired" | "past_due";
 
 export interface PlanFeatures {
 	plan_type: PlanType;
@@ -157,7 +157,7 @@ export class SubscriptionLimits {
 			return { allowed: false, reason: "No subscription found" };
 		}
 
-		if (subscription.status !== "active") {
+		if (subscription.status !== "active" && subscription.status !== "trial") {
 			return { allowed: false, reason: "Subscription not active" };
 		}
 
@@ -190,12 +190,13 @@ export class SubscriptionLimits {
 			return { allowed: false, reason: "No subscription found" };
 		}
 
-		if (subscription.status !== "active") {
+		if (subscription.status !== "active" && subscription.status !== "trial") {
 			return { allowed: false, reason: "Subscription not active" };
 		}
 
-		// All active plans (starter, pro, enterprise) allow export
+		// All active and trial plans (starter, pro, enterprise) allow export
 		// Starter: free local export
+		// Trial: trial access to features
 		// Pro/Enterprise: paid plans with cloud features
 		return { allowed: true };
 	}

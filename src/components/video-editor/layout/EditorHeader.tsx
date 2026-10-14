@@ -100,13 +100,13 @@ export function EditorHeader(props: Props) {
 
 		setSellLoading(true);
 
-		// Check if user has an active subscription
+		// Check if user has an active or trial subscription
 		const currentUser = await getCurrentUser();
 		if (currentUser) {
 			try {
 				const subscription = await subscriptionLimits.getUserSubscription(currentUser.id);
-				if (subscription && subscription.status === "active") {
-					// User has an active subscription (starter, pro, or enterprise) - allow to sell
+				if (subscription && (subscription.status === "active" || subscription.status === "trial")) {
+					// User has an active or trial subscription (starter, pro, or enterprise) - allow to sell
 					const accessToken = session.access_token;
 					const clientUrl = `${CLIENT_PAGE_URL}?token=${accessToken}`;
 					window.open(clientUrl, "_blank");
