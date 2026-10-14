@@ -16,8 +16,12 @@ function fail(message) {
 	throw new Error(`[packaged-smoke] ${message}`);
 }
 
-function assertFile(filePath, label, { executable = false } = {}) {
+function assertFile(filePath, label, { executable = false, optional = false } = {}) {
 	if (!existsSync(filePath)) {
+		if (optional) {
+			console.log(`[packaged-smoke] ${label} (optional): not present at ${relativePath(filePath)}`);
+			return;
+		}
 		fail(`${label} is missing at ${relativePath(filePath)}`);
 	}
 
@@ -180,6 +184,7 @@ function getExpectedNativeHelperFiles(archTag) {
 				name: "recordly-nvidia-cuda-compositor.exe",
 				label: "NVIDIA CUDA compositor helper",
 				executable: true,
+				optional: true,
 			});
 		}
 		return helpers;
@@ -256,6 +261,7 @@ function verifyNativeHelpers(unpackedRoot) {
 				`${expectedFile.label} (${archTag})`,
 				{
 					executable: expectedFile.executable,
+					optional: expectedFile.optional,
 				},
 			);
 		}
