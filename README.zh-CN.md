@@ -1,7 +1,7 @@
 语言: [EN](README.md) | 简中
 
 <p align="center">
-  <img width="220" alt="Recordly logo" src="https://github.com/user-attachments/assets/082bb4b0-5fc5-4e9f-abda-55611fd6aded" />
+  <img width="220" alt="RecordMee logo" src="https://github.com/user-attachments/assets/082bb4b0-5fc5-4e9f-abda-55611fd6aded" />
 </p>
 
 <p align="center">
@@ -10,18 +10,18 @@
 </p>
 
 ### 无需额外剪辑，也能做出精致的屏幕录制。
-[Recordly](https://www.recordly.dev) 是一款**开源屏幕录制器**和编辑器，适合制作**操作讲解、演示、产品视频**等内容。  
+[RecordMee](https://www.recordly.dev) 是一款**开源屏幕录制器**和编辑器，适合制作**操作讲解、演示、产品视频**等内容。  
 **欢迎提交 PR。** [赞助](https://ko-fi.com/AnsphareTeam/goal?g=0)
 
 https://github.com/user-attachments/assets/9b66c71d-ac97-49ff-a0c9-63ac26edf2e4
 
 ---
 
-## Recordly 是什么？
+## RecordMee 是什么？
 
-Recordly 是一款桌面应用，用于录制并编辑屏幕内容，内置面向演示视频的动态呈现工具。你不需要再把原始素材交给动效设计师去补缩放、光标润色或样式化背景，Recordly 可以在一个地方免费完成整套流程。
+RecordMee 是一款桌面应用，用于录制并编辑屏幕内容，内置面向演示视频的动态呈现工具。你不需要再把原始素材交给动效设计师去补缩放、光标润色或样式化背景，RecordMee 可以在一个地方免费完成整套流程。
 
-Recordly 支持：
+RecordMee 支持：
 
 - **macOS** 14.0+
 - **Windows** 10 Build 19041+
@@ -38,17 +38,17 @@ Recordly 支持：
 # 核心功能
 
 ## 自动缩放、光标润色与样式化画面
-Recordly 可以根据操作自动强调重点区域，平滑光标运动，添加动态效果，并将最终画面放进带有壁纸、纯色、渐变、模糊、留白和阴影的样式化边框中。
+RecordMee 可以根据操作自动强调重点区域，平滑光标运动，添加动态效果，并将最终画面放进带有壁纸、纯色、渐变、模糊、留白和阴影的样式化边框中。
 
 <p>
-  <img src="./docs/media/feature1.gif" width="450" alt="Recordly cursor and zoom demo video">
+  <img src="./docs/media/feature1.gif" width="450" alt="RecordMee cursor and zoom demo video">
 </p>
 
 ## 动态摄像头气泡叠加
 你可以把摄像头素材作为气泡叠加层加入画面，使用预设位置或自定义坐标摆放，支持镜像、阴影和圆角调节，也可以让它跟随缩放变化，保证动态镜头里整体视觉更协调。
 
 <p>
-  <img src="./docs/media/feature2.gif" width="450" alt="Recordly webcam overlay demo video">
+  <img src="./docs/media/feature2.gif" width="450" alt="RecordMee webcam overlay demo video">
 </p>
 
 ## 为演示设计的时间线编辑
@@ -60,9 +60,9 @@ Recordly 可以根据操作自动强调重点区域，平滑光标运动，添�
 
 ## 扩展与市场
 
-Recordly 拥有一个社区驱动的扩展系统。任何人都可以构建和发布扩展来为 Recordly 添加新功能，例如光标点击音效、设备边框、浏览器模拟外壳、壁纸、渲染钩子、设置面板等等。
+RecordMee 拥有一个社区驱动的扩展系统。任何人都可以构建和发布扩展来为 RecordMee 添加新功能，例如光标点击音效、设备边框、浏览器模拟外壳、壁纸、渲染钩子、设置面板等等。
 
-浏览并安装社区扩展：[Recordly 扩展市场](https://marketplace.recordly.dev/extensions)。
+浏览并安装社区扩展：[RecordMee 扩展市场](https://marketplace.recordly.dev/extensions)。
 
 ---
 
@@ -149,15 +149,15 @@ Recordly 拥有一个社区驱动的扩展系统。任何人都可以构建和�
 # 截图
 
 <p align="center">
-  <img src="https://i.postimg.cc/8CrQtGJf/Screenshot-2026-04-30-at-5-11-52-pm.png" width="700" alt="Recordly recording interface screenshot">
+  <img src="https://i.postimg.cc/8CrQtGJf/Screenshot-2026-04-30-at-5-11-52-pm.png" width="700" alt="RecordMee recording interface screenshot">
 </p>
 
 <p align="center">
-  <img src="https://i.postimg.cc/pLSMfrTM/Screenshot-2026-04-30-at-5-11-45-pm.png" width="700" alt="Recordly editor screenshot">
+  <img src="https://i.postimg.cc/pLSMfrTM/Screenshot-2026-04-30-at-5-11-45-pm.png" width="700" alt="RecordMee editor screenshot">
 </p>
 
 <p align="center">
-  <img src="https://i.postimg.cc/Zn9VY6bg/Screenshot-2026-03-18-at-6-32-59-pm.png" width="700" alt="Recordly timeline screenshot">
+  <img src="https://i.postimg.cc/Zn9VY6bg/Screenshot-2026-03-18-at-6-32-59-pm.png" width="700" alt="RecordMee timeline screenshot">
 </p>
 
 ---
@@ -168,7 +168,7 @@ Recordly 拥有一个社区驱动的扩展系统。任何人都可以构建和�
 
 预构建发布版本请见：
 
-https://github.com/Ansphare-Team/recordmee-desktop/releases
+https://github.com/Ansphare-Team/record-mee/releases
 
 ---
 
@@ -201,8 +201,8 @@ sudo apt install build-essential cmake libx11-dev libxtst-dev libxrandr-dev libx
 ### 步骤
 
 ```bash
-git clone https://github.com/Ansphare-Team/recordmee-desktop.git recordmee
-cd recordly
+git clone https://github.com/Ansphare-Team/record-mee.git
+cd record-mee
 npm install
 npm run dev
 ```
@@ -228,7 +228,7 @@ npm run build
 可以用以下命令移除隔离标记：
 
 ```bash
-xattr -rd com.apple.quarantine /Applications/Recordly.app
+xattr -rd com.apple.quarantine /Applications/RecordMee.app
 ```
 
 ---
@@ -250,7 +250,7 @@ xattr -rd com.apple.quarantine /Applications/Recordly.app
 
 ## 录制
 
-1. 启动 Recordly。
+1. 启动 RecordMee。
 2. 选择屏幕或窗口。
 3. 选择麦克风和系统音频选项。
 4. 开始录制。
@@ -284,7 +284,7 @@ xattr -rd com.apple.quarantine /Applications/Recordly.app
 
 ### 光标捕获
 
-Recordly 会在录制画面上渲染一个经过美化的光标叠加层，但真实系统光标是否能被隐藏仍取决于平台能力。
+RecordMee 会在录制画面上渲染一个经过美化的光标叠加层，但真实系统光标是否能被隐藏仍取决于平台能力。
 
 **macOS**
 - ScreenCaptureKit 可以较干净地排除真实光标。
@@ -314,7 +314,7 @@ Recordly 会在录制画面上渲染一个经过美化的光标叠加层，但�
 
 # 工作原理
 
-Recordly 将平台相关的捕获层与基于渲染器的编辑、导出流程结合在一起。
+RecordMee 将平台相关的捕获层与基于渲染器的编辑、导出流程结合在一起。
 
 **捕获**
 - Electron 负责录制流程和应用级控制
@@ -384,7 +384,7 @@ https://github.com/Ansphare-Team/recordmee-desktop/issues
 
 # 许可证
 
-Recordly 基于 **AGPL 3.0** 发布。
+RecordMee 基于 **AGPL 3.0** 发布。
 
 ---
 
@@ -392,7 +392,7 @@ Recordly 基于 **AGPL 3.0** 发布。
 
 ## 鸣谢
 
-Recordly 最初是从 [OpenScreen](https://github.com/siddharthvaddem/openscreen) 分叉而来，之后已逐步演变为一个不同的项目。
+RecordMee 最初是从 [OpenScreen](https://github.com/siddharthvaddem/openscreen) 分叉而来，之后已逐步演变为一个不同的项目。
 
 创建者  
 [@AnsphareTeam](https://x.com/AnsphareTeam)
