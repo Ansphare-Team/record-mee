@@ -843,6 +843,9 @@ interface Window {
 		revealInFolder: (
 			filePath: string,
 		) => Promise<{ success: boolean; error?: string; message?: string }>;
+		deleteProjectFile: (
+			filePath: string,
+		) => Promise<{ success: boolean; error?: string; message?: string }>;
 		openRecordingsFolder: () => Promise<{ success: boolean; error?: string; message?: string }>;
 		getRecordingsDirectory: () => Promise<{
 			success: boolean;

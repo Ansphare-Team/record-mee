@@ -224,5 +224,6 @@ export function useEditorProjectController(input: Input) {
 		saveActions,
 		openActions,
 		hasUnsavedChanges,
+		handleDeleteProject: lifecycle.handleDeleteProject,
 	};
 }

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { toFileUrl } from "./projectPersistence";
+import { Trash2 } from "@phosphor-icons/react";
 
 export type ProjectLibraryEntry = {
 	path: string;
@@ -15,6 +16,7 @@ type ProjectBrowserDialogProps = {
 	onOpenChange: (open: boolean) => void;
 	entries: ProjectLibraryEntry[];
 	onOpenProject: (projectPath: string) => void;
+	onDeleteProject?: (projectPath: string) => void;
 	onImportFile?: () => void;
 	anchorRef?: React.RefObject<HTMLElement | null>;
 	preferredDirection?: "up" | "down" | "auto";
@@ -26,6 +28,7 @@ export default function ProjectBrowserDialog({
 	onOpenChange,
 	entries,
 	onOpenProject,
+	onDeleteProject,
 	onImportFile,
 	anchorRef,
 	preferredDirection = "auto",
@@ -198,39 +201,53 @@ export default function ProjectBrowserDialog({
 									? toFileUrl(entry.thumbnailPath)
 									: null;
 								return (
-									<button
-										key={entry.path}
-										type="button"
-										onClick={() => onOpenProject(entry.path)}
-										className="group flex flex-col gap-1 rounded-lg bg-transparent p-0.5 text-left outline-none transition focus:outline-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
-									>
-										<div className="relative aspect-[16/10] w-full overflow-hidden rounded-[5px] bg-editor-dialog-alt shadow-[0_10px_18px_rgba(0,0,0,0.28)] transition duration-200 group-hover:-translate-y-0.5 group-hover:shadow-[0_16px_30px_rgba(0,0,0,0.38)]">
-											{thumbnailSrc ? (
-												<img
-													src={thumbnailSrc}
-													alt=""
-													className="h-full w-full object-cover transition duration-200 group-hover:scale-[1.02]"
-													draggable={false}
-												/>
-											) : (
-												<div className="flex h-full w-full items-center justify-center bg-[linear-gradient(180deg,_rgba(37,99,235,0.22),_rgba(13,17,23,0.92))] text-[10px] font-medium text-white/60">
-													No preview yet
-												</div>
-											)}
-											{entry.isCurrent ? (
-												<div className="absolute right-1.5 top-1.5">
-													<span className="rounded-[5px] bg-[#2563EB] px-1.5 py-0.5 text-[8px] font-semibold uppercase tracking-[0.14em] text-white shadow-[0_8px_20px_rgba(37,99,235,0.28)]">
-														Current
-													</span>
-												</div>
-											) : null}
-										</div>
-										<div className="flex flex-1 flex-col px-0.5 py-0.5">
-											<div className="truncate text-[11px] font-semibold tracking-tight text-foreground">
-												{entry.name}
+									<div key={entry.path} className="group relative">
+										<button
+											type="button"
+											onClick={() => onOpenProject(entry.path)}
+											className="flex flex-col gap-1 rounded-lg bg-transparent p-0.5 text-left outline-none transition focus:outline-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 w-full"
+										>
+											<div className="relative aspect-[16/10] w-full overflow-hidden rounded-[5px] bg-editor-dialog-alt shadow-[0_10px_18px_rgba(0,0,0,0.28)] transition duration-200 group-hover:-translate-y-0.5 group-hover:shadow-[0_16px_30px_rgba(0,0,0,0.38)]">
+												{thumbnailSrc ? (
+													<img
+														src={thumbnailSrc}
+														alt=""
+														className="h-full w-full object-cover transition duration-200 group-hover:scale-[1.02]"
+														draggable={false}
+													/>
+												) : (
+													<div className="flex h-full w-full items-center justify-center bg-[linear-gradient(180deg,_rgba(37,99,235,0.22),_rgba(13,17,23,0.92))] text-[10px] font-medium text-white/60">
+														No preview yet
+													</div>
+												)}
+												{entry.isCurrent ? (
+													<div className="absolute right-1.5 top-1.5">
+														<span className="rounded-[5px] bg-[#2563EB] px-1.5 py-0.5 text-[8px] font-semibold uppercase tracking-[0.14em] text-white shadow-[0_8px_20px_rgba(37,99,235,0.28)]">
+															Current
+														</span>
+													</div>
+												) : null}
 											</div>
-										</div>
-									</button>
+											<div className="flex flex-1 flex-col px-0.5 py-0.5">
+												<div className="truncate text-[11px] font-semibold tracking-tight text-foreground">
+													{entry.name}
+												</div>
+											</div>
+										</button>
+										{onDeleteProject && !entry.isCurrent && (
+											<button
+												type="button"
+												onClick={(e) => {
+													e.stopPropagation();
+													onDeleteProject(entry.path);
+												}}
+												className="absolute right-1 top-1 opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded-md bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300"
+												title="Delete project"
+											>
+												<Trash2 className="h-3 w-3" />
+											</button>
+										)}
+									</div>
 								);
 							})}
 						</div>
@@ -280,39 +297,53 @@ export default function ProjectBrowserDialog({
 									? toFileUrl(entry.thumbnailPath)
 									: null;
 								return (
-									<button
-										key={entry.path}
-										type="button"
-										onClick={() => onOpenProject(entry.path)}
-										className="group flex flex-col gap-1 rounded-lg bg-transparent p-0.5 text-left outline-none transition focus:outline-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
-									>
-										<div className="relative aspect-[16/10] w-full overflow-hidden rounded-[5px] bg-editor-dialog-alt shadow-[0_10px_18px_rgba(0,0,0,0.28)] transition duration-200 group-hover:-translate-y-0.5 group-hover:shadow-[0_16px_30px_rgba(0,0,0,0.38)]">
-											{thumbnailSrc ? (
-												<img
-													src={thumbnailSrc}
-													alt=""
-													className="h-full w-full object-cover transition duration-200 group-hover:scale-[1.02]"
-													draggable={false}
-												/>
-											) : (
-												<div className="flex h-full w-full items-center justify-center bg-[linear-gradient(180deg,_rgba(37,99,235,0.22),_rgba(13,17,23,0.92))] text-[10px] font-medium text-white/60">
-													No preview yet
-												</div>
-											)}
-											{entry.isCurrent ? (
-												<div className="absolute right-1.5 top-1.5">
-													<span className="rounded-[5px] bg-[#2563EB] px-1.5 py-0.5 text-[8px] font-semibold uppercase tracking-[0.14em] text-white shadow-[0_8px_20px_rgba(37,99,235,0.28)]">
-														Current
-													</span>
-												</div>
-											) : null}
-										</div>
-										<div className="flex flex-1 flex-col px-0.5 py-0.5">
-											<div className="truncate text-[11px] font-semibold tracking-tight text-foreground">
-												{entry.name}
+									<div key={entry.path} className="group relative">
+										<button
+											type="button"
+											onClick={() => onOpenProject(entry.path)}
+											className="flex flex-col gap-1 rounded-lg bg-transparent p-0.5 text-left outline-none transition focus:outline-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 w-full"
+										>
+											<div className="relative aspect-[16/10] w-full overflow-hidden rounded-[5px] bg-editor-dialog-alt shadow-[0_10px_18px_rgba(0,0,0,0.28)] transition duration-200 group-hover:-translate-y-0.5 group-hover:shadow-[0_16px_30px_rgba(0,0,0,0.38)]">
+												{thumbnailSrc ? (
+													<img
+														src={thumbnailSrc}
+														alt=""
+														className="h-full w-full object-cover transition duration-200 group-hover:scale-[1.02]"
+														draggable={false}
+													/>
+												) : (
+													<div className="flex h-full w-full items-center justify-center bg-[linear-gradient(180deg,_rgba(37,99,235,0.22),_rgba(13,17,23,0.92))] text-[10px] font-medium text-white/60">
+														No preview yet
+													</div>
+												)}
+												{entry.isCurrent ? (
+													<div className="absolute right-1.5 top-1.5">
+														<span className="rounded-[5px] bg-[#2563EB] px-1.5 py-0.5 text-[8px] font-semibold uppercase tracking-[0.14em] text-white shadow-[0_8px_20px_rgba(37,99,235,0.28)]">
+															Current
+														</span>
+													</div>
+												) : null}
 											</div>
-										</div>
-									</button>
+											<div className="flex flex-1 flex-col px-0.5 py-0.5">
+												<div className="truncate text-[11px] font-semibold tracking-tight text-foreground">
+													{entry.name}
+												</div>
+											</div>
+										</button>
+										{onDeleteProject && !entry.isCurrent && (
+											<button
+												type="button"
+												onClick={(e) => {
+													e.stopPropagation();
+													onDeleteProject(entry.path);
+												}}
+												className="absolute right-1 top-1 opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded-md bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300"
+												title="Delete project"
+											>
+												<Trash2 className="h-3 w-3" />
+											</button>
+										)}
+									</div>
 								);
 							})}
 						</div>

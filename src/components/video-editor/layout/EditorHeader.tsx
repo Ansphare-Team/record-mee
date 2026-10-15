@@ -3,6 +3,7 @@ import {
 	ArrowClockwise as Redo2,
 	ArrowCounterClockwise as Undo2,
 	CurrencyDollar,
+	Plus,
 } from "@phosphor-icons/react";
 import type { CSSProperties, FormEvent, RefObject } from "react";
 import { useState } from "react";
@@ -35,6 +36,7 @@ type Props = {
 	handleRedo: () => void;
 	handleProjectNameSubmit: (event?: FormEvent<HTMLFormElement>) => void;
 	closeProjectNameEditor: () => void;
+	handleNewRecording?: () => Promise<void>;
 	presets: ReturnType<typeof useVideoEditorPresets>;
 	exportSettings: ReturnType<typeof useExportSettings>;
 	exportSession: ReturnType<typeof useExportSession>;
@@ -70,6 +72,7 @@ export function EditorHeader(props: Props) {
 		handleRedo,
 		handleProjectNameSubmit,
 		closeProjectNameEditor,
+		handleNewRecording,
 		presets,
 		exportSettings,
 		exportSession,
@@ -185,6 +188,17 @@ export function EditorHeader(props: Props) {
 				className="absolute left-1/2 flex min-w-0 -translate-x-1/2 items-center justify-center"
 				style={{ WebkitAppRegion: "no-drag" } as CSSProperties}
 			>
+				{handleNewRecording && (
+					<Button
+						type="button"
+						onClick={() => void handleNewRecording()}
+						className="mr-2 inline-flex h-8 w-8 items-center justify-center rounded-[5px] border border-foreground/10 bg-foreground/5 p-0 text-foreground transition-colors hover:bg-foreground/10 hover:text-foreground"
+						title="Start new recording"
+						aria-label="Start new recording"
+					>
+						<Plus className="h-4 w-4" />
+					</Button>
+				)}
 				{isEditingProjectName ? (
 					<form
 						onSubmit={(event) => void handleProjectNameSubmit(event)}

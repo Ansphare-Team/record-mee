@@ -16,7 +16,14 @@ export function getSupabaseClient() {
 			console.error("Supabase credentials not configured");
 			return null;
 		}
-		supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+		supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+			auth: {
+				persistSession: true,
+				autoRefreshToken: true,
+				detectSessionInUrl: false,
+				storage: localStorage,
+			},
+		});
 	}
 	return supabase;
 }

@@ -77,6 +77,7 @@ export function EditorShell(props: Props) {
 		saveActions,
 		openActions,
 		hasUnsavedChanges,
+		handleDeleteProject,
 	} = projectController;
 	const {
 		cursor,
@@ -115,6 +116,8 @@ export function EditorShell(props: Props) {
 			}
 			handleImportMediaOrProject={openActions.handleImportMediaOrProject}
 			handleOpenProjectFromLibrary={openActions.handleOpenProjectFromLibrary}
+			handleDeleteProject={handleDeleteProject}
+			handleNewRecording={lifecycle.handleNewRecording}
 			nativeCaptureUnavailableModalOpen={ui.nativeCaptureUnavailableModalOpen}
 			setNativeCaptureUnavailableModalOpen={ui.setNativeCaptureUnavailableModalOpen}
 		/>
@@ -163,6 +166,7 @@ export function EditorShell(props: Props) {
 				handleRedo={history.handleRedo}
 				handleProjectNameSubmit={saveActions.handleProjectNameSubmit}
 				closeProjectNameEditor={saveActions.closeProjectNameEditor}
+				handleNewRecording={lifecycle.handleNewRecording}
 				presets={presets}
 				exportSettings={exportSettings}
 				exportSession={exportSession}

@@ -39,6 +39,8 @@ interface EditorDialogsProps {
 	projectBrowserAnchorRef: RefObject<HTMLButtonElement>;
 	handleImportMediaOrProject: () => Promise<void>;
 	handleOpenProjectFromLibrary: (projectPath: string) => Promise<void>;
+	handleDeleteProject?: (projectPath: string) => Promise<void>;
+	handleNewRecording?: () => Promise<void>;
 	nativeCaptureUnavailableModalOpen: boolean;
 	setNativeCaptureUnavailableModalOpen: Dispatch<SetStateAction<boolean>>;
 }
@@ -63,6 +65,8 @@ export function EditorDialogs({
 	projectBrowserAnchorRef,
 	handleImportMediaOrProject,
 	handleOpenProjectFromLibrary,
+	handleDeleteProject,
+	handleNewRecording,
 	nativeCaptureUnavailableModalOpen,
 	setNativeCaptureUnavailableModalOpen,
 }: EditorDialogsProps) {
@@ -176,6 +180,7 @@ export function EditorDialogs({
 				anchorRef={projectBrowserAnchorRef}
 				onImportFile={() => void handleImportMediaOrProject()}
 				onOpenProject={(projectPath) => void handleOpenProjectFromLibrary(projectPath)}
+				onDeleteProject={handleDeleteProject ? (projectPath) => void handleDeleteProject(projectPath) : undefined}
 			/>
 
 			<Dialog

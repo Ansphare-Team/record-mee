@@ -622,6 +622,44 @@ export function registerProjectHandlers() {
 			};
 		}
 	});
+
+	ipcMain.handle("delete-project-file", async (_, filePath: string) => {
+		try {
+			const normalizedPath = path.normalize(filePath);
+
+			// Check if file exists
+			try {
+				await fs.access(normalizedPath, fsConstants.R_OK);
+			} catch {
+				return {
+					success: false,
+					error: "File not found",
+					message: "Project file not found.",
+				};
+			}
+
+			// Delete the project file
+			await fs.unlink(normalizedPath);
+
+			// Delete the thumbnail if it exists
+			const thumbnailPath = getProjectThumbnailPath(normalizedPath);
+			try {
+				await fs.access(thumbnailPath, fsConstants.R_OK);
+				await fs.unlink(thumbnailPath);
+			} catch {
+				// Thumbnail doesn't exist, ignore
+			}
+
+			return { success: true };
+		} catch (error) {
+			console.error("Failed to delete project file:", error);
+			return {
+				success: false,
+				error: String(error),
+				message: "Failed to delete project file.",
+			};
+		}
+	});
 	ipcMain.handle(
 		"set-current-video-path",
 		async (

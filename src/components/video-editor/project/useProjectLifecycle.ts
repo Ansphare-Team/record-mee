@@ -382,6 +382,31 @@ export function useProjectLifecycle(input: Input) {
 		toast.success(input.t("settings.effects.webcamFootageRemoved"));
 	}, [appearance.setWebcam, syncRecordingSessionWebcam, input.t]);
 
+	const handleDeleteProject = useCallback(async (projectPath: string) => {
+		try {
+			const result = await window.electronAPI.deleteProjectFile(projectPath);
+			if (!result.success) {
+				toast.error(result.message || "Failed to delete project");
+				return;
+			}
+			await refreshProjectLibrary();
+			toast.success("Project deleted successfully");
+		} catch (error) {
+			console.error("Failed to delete project:", error);
+			toast.error("Failed to delete project");
+		}
+	}, [refreshProjectLibrary]);
+
+	const handleNewRecording = useCallback(async () => {
+		try {
+			// Trigger window close - will auto-save and switch to HUD
+			window.close();
+		} catch (error) {
+			console.error("Failed to start new recording:", error);
+			toast.error("Failed to start new recording");
+		}
+	}, []);
+
 	return {
 		applyLoadedProject,
 		currentProjectSnapshot,
@@ -393,5 +418,7 @@ export function useProjectLifecycle(input: Input) {
 		resetSourceScopedEditorState,
 		handleUploadWebcam,
 		handleClearWebcam,
+		handleDeleteProject,
+		handleNewRecording,
 	};
 }
