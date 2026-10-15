@@ -40,7 +40,6 @@ interface EditorDialogsProps {
 	handleImportMediaOrProject: () => Promise<void>;
 	handleOpenProjectFromLibrary: (projectPath: string) => Promise<void>;
 	handleDeleteProject?: (projectPath: string) => Promise<void>;
-	handleNewRecording?: () => Promise<void>;
 	nativeCaptureUnavailableModalOpen: boolean;
 	setNativeCaptureUnavailableModalOpen: Dispatch<SetStateAction<boolean>>;
 }
@@ -66,7 +65,6 @@ export function EditorDialogs({
 	handleImportMediaOrProject,
 	handleOpenProjectFromLibrary,
 	handleDeleteProject,
-	handleNewRecording,
 	nativeCaptureUnavailableModalOpen,
 	setNativeCaptureUnavailableModalOpen,
 }: EditorDialogsProps) {

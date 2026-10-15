@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { toFileUrl } from "./projectPersistence";
-import { Trash2 } from "@phosphor-icons/react";
+import { Trash } from "@phosphor-icons/react";
 
 export type ProjectLibraryEntry = {
 	path: string;
@@ -244,7 +244,7 @@ export default function ProjectBrowserDialog({
 												className="absolute right-1 top-1 opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded-md bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300"
 												title="Delete project"
 											>
-												<Trash2 className="h-3 w-3" />
+												<Trash className="h-3 w-3" />
 											</button>
 										)}
 									</div>
@@ -340,7 +340,7 @@ export default function ProjectBrowserDialog({
 												className="absolute right-1 top-1 opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded-md bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300"
 												title="Delete project"
 											>
-												<Trash2 className="h-3 w-3" />
+												<Trash className="h-3 w-3" />
 											</button>
 										)}
 									</div>

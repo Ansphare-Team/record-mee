@@ -117,7 +117,6 @@ export function EditorShell(props: Props) {
 			handleImportMediaOrProject={openActions.handleImportMediaOrProject}
 			handleOpenProjectFromLibrary={openActions.handleOpenProjectFromLibrary}
 			handleDeleteProject={handleDeleteProject}
-			handleNewRecording={lifecycle.handleNewRecording}
 			nativeCaptureUnavailableModalOpen={ui.nativeCaptureUnavailableModalOpen}
 			setNativeCaptureUnavailableModalOpen={ui.setNativeCaptureUnavailableModalOpen}
 		/>

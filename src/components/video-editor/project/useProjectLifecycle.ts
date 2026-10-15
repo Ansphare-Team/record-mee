@@ -389,13 +389,14 @@ export function useProjectLifecycle(input: Input) {
 				toast.error(result.message || "Failed to delete project");
 				return;
 			}
-			await refreshProjectLibrary();
+			const current = inputRef.current;
+			await current.refreshProjectLibrary();
 			toast.success("Project deleted successfully");
 		} catch (error) {
 			console.error("Failed to delete project:", error);
 			toast.error("Failed to delete project");
 		}
-	}, [refreshProjectLibrary]);
+	}, []);
 
 	const handleNewRecording = useCallback(async () => {
 		try {

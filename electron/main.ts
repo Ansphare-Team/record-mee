@@ -5,7 +5,6 @@ import {
 	app,
 	BrowserWindow,
 	desktopCapturer,
-	dialog,
 	webContents as electronWebContents,
 	ipcMain,
 	Menu,
@@ -813,7 +812,7 @@ function createEditorWindowWrapper() {
 		if (editorHasUnsavedChanges) {
 			event.preventDefault();
 			editorWindow.webContents.send("request-save-before-close");
-			ipcMain.once("save-before-close-done", (_event, saved: boolean) => {
+			ipcMain.once("save-before-close-done", () => {
 				if (process.platform === "win32" && !isAppQuitting) {
 					closeEditorWindowToHud(editorWindow);
 				} else {

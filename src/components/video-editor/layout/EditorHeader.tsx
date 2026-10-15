@@ -188,6 +188,7 @@ export function EditorHeader(props: Props) {
 				className="absolute left-1/2 flex min-w-0 -translate-x-1/2 items-center justify-center"
 				style={{ WebkitAppRegion: "no-drag" } as CSSProperties}
 			>
+
 				{handleNewRecording && (
 					<Button
 						type="button"
