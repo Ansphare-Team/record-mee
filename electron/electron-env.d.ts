@@ -846,6 +846,7 @@ interface Window {
 		deleteProjectFile: (
 			filePath: string,
 		) => Promise<{ success: boolean; error?: string; message?: string }>;
+		switchToHud: () => Promise<{ success: boolean }>;
 		openRecordingsFolder: () => Promise<{ success: boolean; error?: string; message?: string }>;
 		getRecordingsDirectory: () => Promise<{
 			success: boolean;

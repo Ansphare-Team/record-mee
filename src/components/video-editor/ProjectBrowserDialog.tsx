@@ -241,7 +241,7 @@ export default function ProjectBrowserDialog({
 													e.stopPropagation();
 													onDeleteProject(entry.path);
 												}}
-												className="absolute right-1 top-1 opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded-md bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300"
+												className="absolute right-1 top-1 p-1.5 rounded-md bg-red-500 hover:bg-red-600 text-white transition-colors shadow-sm"
 												title="Delete project"
 											>
 												<Trash className="h-3 w-3" />
@@ -337,7 +337,7 @@ export default function ProjectBrowserDialog({
 													e.stopPropagation();
 													onDeleteProject(entry.path);
 												}}
-												className="absolute right-1 top-1 opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded-md bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300"
+												className="absolute right-1 top-1 p-1.5 rounded-md bg-red-500 hover:bg-red-600 text-white transition-colors shadow-sm"
 												title="Delete project"
 											>
 												<Trash className="h-3 w-3" />

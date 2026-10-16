@@ -16,7 +16,11 @@ export function getSupabaseClient() {
 			console.error("Supabase credentials not configured");
 			return null;
 		}
-		const storage = typeof window !== "undefined" ? localStorage : undefined;
+		// In Electron renderer, localStorage is available and works correctly
+		// For tests, check if localStorage exists
+		const storage = typeof window !== "undefined" && typeof localStorage !== "undefined"
+			? localStorage
+			: undefined;
 		supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
 			auth: {
 				persistSession: true,

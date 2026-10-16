@@ -925,6 +925,9 @@ contextBridge.exposeInMainWorld("electronAPI", {
 	deleteProjectFile: (filePath: string) => {
 		return ipcRenderer.invoke("delete-project-file", filePath);
 	},
+	switchToHud: () => {
+		return ipcRenderer.invoke("switch-to-hud");
+	},
 	openRecordingsFolder: () => {
 		return ipcRenderer.invoke("open-recordings-folder");
 	},

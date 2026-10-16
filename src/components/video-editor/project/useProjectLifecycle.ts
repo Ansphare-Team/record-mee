@@ -400,13 +400,41 @@ export function useProjectLifecycle(input: Input) {
 
 	const handleNewRecording = useCallback(async () => {
 		try {
-			// Trigger window close - will auto-save and switch to HUD
-			window.close();
+			const current = inputRef.current;
+
+			// Check if there's a source path (required for save)
+			if (!current.currentSourcePath) {
+				toast.error("No video to save");
+				return;
+			}
+
+			// Create project data
+			const projectData = createProjectData(
+				current.currentSourcePath,
+				current.currentPersistedEditorState,
+				project.lastSavedSnapshot?.projectId ?? null,
+			);
+
+			// Save directly using saveProjectFileNamed (no dialog)
+			const saveResult = await window.electronAPI.saveProjectFileNamed(
+				projectData,
+				"Untitled", // Will auto-generate if name conflicts
+				undefined, // No thumbnail
+				"rename", // Rename mode
+			);
+
+			if (!saveResult.success) {
+				toast.error(saveResult.message || "Failed to save project");
+				return;
+			}
+
+			// Only after successful save, switch to HUD
+			await window.electronAPI.switchToHud();
 		} catch (error) {
 			console.error("Failed to start new recording:", error);
 			toast.error("Failed to start new recording");
 		}
-	}, []);
+	}, [inputRef, project.lastSavedSnapshot]);
 
 	return {
 		applyLoadedProject,

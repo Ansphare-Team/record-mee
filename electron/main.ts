@@ -305,6 +305,19 @@ ipcMain.on("set-has-unsaved-changes", (_event, hasChanges: boolean) => {
 	editorHasUnsavedChanges = hasChanges;
 });
 
+ipcMain.handle("switch-to-hud", async () => {
+	const editorWindow = getExistingEditorWindow();
+	if (editorWindow && !editorWindow.isDestroyed()) {
+		// Force close and switch to HUD (skip save dialog)
+		isForceClosing = true;
+		editorHasUnsavedChanges = false;
+		closeEditorWindowToHud(editorWindow);
+	} else {
+		createWindow();
+	}
+	return { success: true };
+});
+
 function createWindow() {
 	if (!app.isReady()) {
 		void app.whenReady().then(() => {
