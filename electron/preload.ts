@@ -928,6 +928,12 @@ contextBridge.exposeInMainWorld("electronAPI", {
 	switchToHud: () => {
 		return ipcRenderer.invoke("switch-to-hud");
 	},
+	getSessionData: () => {
+		return ipcRenderer.invoke("getSessionData");
+	},
+	saveSessionData: (data: Record<string, string>) => {
+		return ipcRenderer.invoke("saveSessionData", data);
+	},
 	openRecordingsFolder: () => {
 		return ipcRenderer.invoke("open-recordings-folder");
 	},

@@ -318,6 +318,48 @@ ipcMain.handle("switch-to-hud", async () => {
 	return { success: true };
 });
 
+// Session data persistence handlers
+const SESSION_DATA_FILE = "session-data.json";
+
+ipcMain.handle("getSessionData", async () => {
+	try {
+		const { app } = await import("electron");
+		const path = await import("path");
+		const fs = await import("node:fs/promises");
+
+		const userDataPath = app.getPath("userData");
+		const sessionFilePath = path.join(userDataPath, SESSION_DATA_FILE);
+
+		try {
+			const data = await fs.readFile(sessionFilePath, "utf-8");
+			return { success: true, data: JSON.parse(data) };
+		} catch {
+			return { success: true, data: {} };
+		}
+	} catch (error) {
+		console.error("Failed to load session data:", error);
+		return { success: false, data: {} };
+	}
+});
+
+ipcMain.handle("saveSessionData", async (_, data: Record<string, string>) => {
+	try {
+		const { app } = await import("electron");
+		const path = await import("path");
+		const fs = await import("node:fs/promises");
+
+		const userDataPath = app.getPath("userData");
+		const sessionFilePath = path.join(userDataPath, SESSION_DATA_FILE);
+
+		await fs.writeFile(sessionFilePath, JSON.stringify(data, null, 2), "utf-8");
+		console.log("[Session Data] Saved to disk");
+		return { success: true };
+	} catch (error) {
+		console.error("Failed to save session data:", error);
+		return { success: false };
+	}
+});
+
 function createWindow() {
 	if (!app.isReady()) {
 		void app.whenReady().then(() => {

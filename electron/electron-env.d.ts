@@ -847,6 +847,8 @@ interface Window {
 			filePath: string,
 		) => Promise<{ success: boolean; error?: string; message?: string }>;
 		switchToHud: () => Promise<{ success: boolean }>;
+		getSessionData: () => Promise<{ success: boolean; data: Record<string, string> }>;
+		saveSessionData: (data: Record<string, string>) => Promise<{ success: boolean }>;
 		openRecordingsFolder: () => Promise<{ success: boolean; error?: string; message?: string }>;
 		getRecordingsDirectory: () => Promise<{
 			success: boolean;

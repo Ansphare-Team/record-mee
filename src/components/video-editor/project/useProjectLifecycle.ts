@@ -415,12 +415,17 @@ export function useProjectLifecycle(input: Input) {
 				project.lastSavedSnapshot?.projectId ?? null,
 			);
 
+			// Use timestamp-based name to avoid conflicts
+			const timestamp = new Date().toISOString().replace(/[:.]/g, "-").slice(0, 19);
+			const projectName = `Recording-${timestamp}`;
+
 			// Save directly using saveProjectFileNamed (no dialog)
+			// Use "copy" mode to avoid name conflicts - it will create a new project with unique ID
 			const saveResult = await window.electronAPI.saveProjectFileNamed(
 				projectData,
-				"Untitled", // Will auto-generate if name conflicts
+				projectName, // Unique name with timestamp
 				undefined, // No thumbnail
-				"rename", // Rename mode
+				"copy", // Copy mode - always creates new project
 			);
 
 			if (!saveResult.success) {
